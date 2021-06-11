@@ -1,24 +1,23 @@
 # Ansible Role: Jenkins Swarm Agent
 
-Installs Jenkins Agent on Windows servers via the swarm jar and run it as a windows service using NSSM.
+Installs Jenkins Agent on servers via the swarm jar. On windows it runs as a service using NSSM.
 
 ## Requirements
 
-Requires Java 8+ be installed on the server
+* Requires Java 8+ be installed on the server
+* Jenkins master with the [Swarm client](https://wiki.jenkins-ci.org/display/JENKINS/Swarm+Plugin)
+* Ansible 2.2 due to use of some new Windows modules
 
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    jenkins_master_url: 'http://localhost:8080'
+    jenkins_agent_master: 'localhost'
+    jenkins_agent_master_port: 80
+    jenkins_agent_master_protocal: 'http'
 
 The system hostname; usually `localhost` works fine. This will be used during setup to communicate with the running Jenkins instance via HTTP requests.
 
-    agent_drive: 'C:'
-
-    agent_home: "{{agent_drive}}\\j"
-
-The Jenkins agent home directory which, amongst others, is being used for storing artifacts, workspaces and plugins. This variable allows you to override the default C:\j location.
 
     jenkins_admin_username: admin
     jenkins_admin_password: admin
@@ -29,7 +28,7 @@ Credentials for Jenkins master user.
 
 Name of the slave.
 
-    version: "3.3"
+    version: "3.6"
 
 Then Jenkins agent swarm client version can be pinned to any version available on https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/
 
@@ -57,30 +56,41 @@ Swarm option to disable ssl verification in the HttpClient.
 
     service_user: "LocalSystem"
     service_pass: undefined
+
 This system account and password he service will run on. This is set it to run as the `LocalSystem` account by default with no password.
 
     java: 'C:\ProgramData\Oracle\Java\javapath\java.exe'
 
 The path to the java program on the system.
 
+    agent_drive: 'C:'
+
+    agent_home: "{{agent_drive}}\\j"
+
+The Jenkins agent home directory which, amongst others, is being used for storing artifacts, workspaces and plugins. This variable allows you to override the default C:\j location.
+
 ## Dependencies
 
   - Java installed on the system. Used `geerlingguy.java` role.
 
-## Example Playbook
+
+Example Playbook
+----------------
 
 ```yaml
-- hosts: jenkins_slave
+- hosts: jenkins_agents
   vars:
-    jenkins_master_url: 'http://jenkins.example.com'
+    jenkins_agent_master: "{{ hostvars.example_master.ansible_host }}",
+    jenkins_agent_num_executors: 8,
+    jenkins_agent_labels: "Windows dotnet swarm msbuild"
+
   roles:
-    - { role: mmagonde.jenkins-windows-swarm }
-```
+    - mmagonde.jenkins-swarm-agent
 
 ## License
 
-Apache 2.0
+BSD
 
 ## Author Information
 
-This role was created in 2017 by [Mutsa Magonde](https://github.com/mmagonde).
+This role was created in 2021 by [Mutsa Magonde](https://github.com/mmagonde).

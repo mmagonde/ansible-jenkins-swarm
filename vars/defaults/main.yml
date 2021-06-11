@@ -1,0 +1,2 @@
+---
+jenkins_master_url:  "{{jenkins_agent_master_protocal}}://{{jenkins_agent_master}}:{{jenkins_agent_master_port}}"

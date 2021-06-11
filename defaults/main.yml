@@ -1,0 +1,30 @@
+---
+
+version:                        '3.6'
+client_jar:                     "swarm-client-{{version}}.jar"
+client_source:                  "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/{{version}}/{{client_jar}}"
+swarm_mode:                     'exclusive'
+swarm_executors:                '4'
+swarm_labels:                   'windows'
+disable_ssl_verification:       '-disableSslVerification'
+agent_name:                     'Jenkins_Windows_Agent'
+jenkins_agent_master:           'localhost'
+jenkins_agent_master_port:       80
+jenkins_agent_master_protocal:  'http'
+jenkins_agent_username:         'admin'
+jenkins_agent_password:         'admin'
+
+# Linux Vars
+jenkins_swarm_path: /var/lib/jenkins
+jenkins_swarm_config_path: /etc/jenkins
+jenkins_swarm_task_name: Jenkins Swarm Client
+jenkins_swarm_systemd_path: /lib/systemd/system
+jenkins_swarm_service_name: swarm-client
+
+# Windows Vars
+service_name:                   'Jenkins_Agent'
+service_user:                   "LocalSystem"
+service_pass:                   undefined
+agent_drive:                    'C:'
+agent_home:                     "{{agent_drive}}\\j"
+java:                           'C:\ProgramData\Oracle\Java\javapath\java.exe'

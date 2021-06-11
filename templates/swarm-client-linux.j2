@@ -1,0 +1,11 @@
+{{ ansible_managed|comment }}
+MASTER="{{ jenkins_agent_master|default('') }}"
+JAR="{{ swarm_jar.dest }}"
+MASTER_PORT="{{ jenkins_agent_master_port }}"
+MASTER_PROTOCAL="{{ jenkins_agent_master_protocal }}"
+SWARM_USERNAME="{{ jenkins_agent_username }}"
+SWARM_PASSWORD="{{ jenkins_agent_password }}"
+NAME="{{ agent_name }}"
+NUM_EXECUTORS="{{ swarm_executors }}"
+LABELS="{{ swarm_labels }}"
+SWARM_ADDITIONAL_FLAGS="{{ jenkins_agent_additional_args | join(' ') }}"

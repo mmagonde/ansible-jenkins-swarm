@@ -1,0 +1,22 @@
+galaxy_info:
+  author: Mutsa Magonde
+  description: Install Jenkins Swarm agent using swarm
+  license: BSD
+  license: Apache-2.0
+  min_ansible_version: 2.2
+  platforms:
+    - name: EL
+      versions:
+      - 6
+      - 7
+    - name: Debian
+      versions:
+      - jessie
+      - wheezy
+    - name: Windows
+      versions: 
+      - all
+  galaxy_tags:
+    - development
+    - system
+    - jenkins
